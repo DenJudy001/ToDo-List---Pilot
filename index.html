@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Daily Focus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- Google Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1><span class="material-symbols-outlined">
+                    home
+                </span>Daily Focus</h1>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div class="streak-badge" title="Days with 100% completion">
+                    <span class="material-symbols-outlined">
+                        mode_heat
+                    </span><span id="streak-display">0</span> Day Streak
+                </div>
+                <button class="settings-btn" onclick="openSettings()" title="Edit Daily Habits"><span
+                        class="material-symbols-outlined">
+                        settings
+                    </span></button>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-text">0/0 Completed</div>
+    </header>
+
+    <div class="board">
+        <!-- Todo Column -->
+        <div class="column" id="col-todo" data-status="todo">
+            <div class="column-header">Today's Goals</div>
+            <div class="task-list" id="todo-list"></div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="column" id="col-done" data-status="done">
+            <div class="column-header">Completed</div>
+            <div class="task-list" id="done-list"></div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal">
+            <h2 style="font-weight: 700; color: var(--text-main);">Manage Habits</h2>
+            <p style="color: var(--text-muted); margin-top: 5px;">These quests will regenerate every morning.</p>
+            <textarea id="defaults-input" placeholder="Meditate&#10;Read&#10;Walk"></textarea>
+            <div style="text-align: right;">
+                <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDefaults()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to the external JavaScript file (often placed at the end of the body for performance) -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
