@@ -1,5 +1,5 @@
 /* * =========================================
-    * THEME: Zen / Morning Sky
+    * THEME: Morning Sky (Zen)
     * =========================================
     */
 :root {
@@ -8,18 +8,17 @@
     --text-main: #2d3436;
     --text-muted: #636e72;
     --accent-color: #74b9ff;
-    /* Soft Blue */
     --success-color: #55efc4;
-    /* Mint Green */
+    --danger-color: #ff7675;
+    --radius: 20px;
     --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.1);
-    --radius: 20px;
 }
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     user-select: none;
 }
 
@@ -33,9 +32,9 @@ body {
     overflow: hidden;
 }
 
-/* --- Header & Progress --- */
+/* --- Header --- */
 header {
-    padding: 30px 50px;
+    padding: 20px 40px;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(12px);
     display: flex;
@@ -51,37 +50,81 @@ header {
     align-items: center;
 }
 
+.date-display {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 h1 {
-    font-weight: 700;
-    font-size: 1.5rem;
+    font-weight: 800;
+    font-size: 1.6rem;
     color: var(--text-main);
-    letter-spacing: -0.5px;
+}
+
+.controls {
     display: flex;
-    align-items: center;
     gap: 10px;
 }
 
+.icon-btn {
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Badge for trash count */
+.badge-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger-color);
+    color: white;
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    display: none;
+    /* Hidden by default */
+}
+
 .streak-badge {
-    background: #fff;
+    background: white;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #fab1a0;
-    /* Soft Orange */
     box-shadow: var(--shadow-sm);
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
+/* Progress Bar */
 .progress-container {
     width: 100%;
     height: 6px;
     background: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     overflow: hidden;
-    position: relative;
 }
 
 .progress-bar {
@@ -91,35 +134,13 @@ h1 {
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.progress-text {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    align-self: flex-end;
-    margin-top: -10px;
-}
-
-button.settings-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 5px;
-    transition: transform 0.2s;
-}
-
-button.settings-btn:hover {
-    transform: rotate(45deg);
-    color: var(--text-main);
-}
-
-/* --- Board Layout --- */
+/* --- Board --- */
 .board {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    padding: 40px 50px;
+    padding: 30px 40px;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -132,43 +153,38 @@ button.settings-btn:hover {
     flex-direction: column;
     height: 100%;
     border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: all 0.3s ease;
-}
-
-.column.drag-over {
-    background: rgba(255, 255, 255, 0.8);
-    transform: scale(1.02);
-    box-shadow: 0 0 0 4px rgba(116, 185, 255, 0.2);
 }
 
 .column-header {
-    padding: 25px;
+    padding: 20px;
     font-weight: 600;
-    font-size: 1.1rem;
     color: var(--text-muted);
-    display: flex;
-    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .task-list {
     flex: 1;
-    padding: 0 25px 25px 25px;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 /* --- Task Cards --- */
 .task-card {
     background: var(--card-bg);
-    padding: 20px;
-    border-radius: 16px;
+    padding: 18px;
+    border-radius: 14px;
     box-shadow: var(--shadow-sm);
     cursor: grab;
-    transition: all 0.2s ease;
     position: relative;
     border-left: 4px solid transparent;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 [data-status="todo"] .task-card {
@@ -178,23 +194,71 @@ button.settings-btn:hover {
 [data-status="done"] .task-card {
     border-left-color: var(--success-color);
     opacity: 0.6;
-    background: #f8f9fa;
     text-decoration: line-through;
-    color: #b2bec3;
+    background: #f8f9fa;
 }
 
 .task-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-}
-
-.task-card:active {
-    cursor: grabbing;
 }
 
 .task-card.dragging {
     opacity: 0.4;
     transform: scale(0.95);
+}
+
+/* Delete Button on Card */
+.delete-btn {
+    opacity: 0;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: all 0.2s;
+}
+
+.task-card:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    color: var(--danger-color);
+    transform: scale(1.2);
+}
+
+/* --- Add New Task Input --- */
+.add-task-wrapper {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 10px;
+}
+
+.add-task-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+.add-task-input:focus {
+    border-color: var(--accent-color);
+}
+
+.add-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    width: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 /* --- Modals --- */
@@ -214,9 +278,11 @@ button.settings-btn:hover {
 
 .modal {
     background: white;
-    padding: 40px;
+    padding: 30px;
     border-radius: var(--radius);
-    width: 450px;
+    width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
     box-shadow: var(--shadow-md);
     animation: fadeIn 0.3s ease;
 }
@@ -233,30 +299,102 @@ button.settings-btn:hover {
     }
 }
 
+.modal h2 {
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+/* History Styles */
+.history-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.history-date {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+
+.history-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+.history-tasks {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.history-tasks li {
+    font-size: 0.85rem;
+    color: #555;
+    position: relative;
+    padding-left: 15px;
+}
+
+.history-tasks li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--success-color);
+}
+
+/* Trash Styles */
+.trash-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.trash-item span {
+    font-size: 0.9rem;
+    color: #666;
+    text-decoration: line-through;
+}
+
+.restore-btn {
+    background: none;
+    border: 1px solid var(--success-color);
+    color: var(--success-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.restore-btn:hover {
+    background: var(--success-color);
+    color: white;
+}
+
 textarea {
     width: 100%;
     height: 120px;
-    padding: 15px;
-    border: 2px solid #dfe6e9;
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    resize: none;
-    margin: 20px 0;
-    font-size: 1rem;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    resize: vertical;
+    font-family: 'Inter';
 }
 
-textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
+.btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .btn {
-    padding: 10px 24px;
-    border-radius: 12px;
+    padding: 8px 16px;
+    border-radius: 8px;
     border: none;
-    font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s;
+    font-weight: 600;
 }
 
 .btn-primary {
@@ -265,11 +403,6 @@ textarea:focus {
 }
 
 .btn-secondary {
-    background: #dfe6e9;
-    color: var(--text-main);
-    margin-right: 10px;
-}
-
-.btn:hover {
-    opacity: 0.8;
+    background: #eee;
+    color: #555;
 }

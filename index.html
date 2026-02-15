@@ -16,16 +16,23 @@
 
     <header>
         <div class="header-top">
-            <h1><span class="material-symbols-outlined">
-                    home
-                </span>Daily Focus</h1>
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <div class="streak-badge" title="Days with 100% completion">
-                    <span class="material-symbols-outlined">
-                        mode_heat
-                    </span><span id="streak-display">0</span> Day Streak
+            <div>
+                <div class="date-display" id="date-display">Monday, Jan 01</div>
+                <h1>Daily Focus</h1>
+            </div>
+
+            <div class="controls">
+                <div class="streak-badge" title="Days with 100% Completion">
+                    <span class="material-symbols-outlined">local_fire_department</span>
+                    <span id="streak-display">0</span>
                 </div>
-                <button class="settings-btn" onclick="openSettings()" title="Edit Daily Habits"><span
+                <button class="icon-btn" onclick="openHistory()" title="History">
+                    <span class="material-symbols-outlined">history</span></button>
+                <button class="icon-btn" onclick="openTrash()" title="Recycle Bin">
+                    <span class="material-symbols-outlined">delete</span>
+                    <div id="trash-badge" class="badge-count">0</div>
+                </button>
+                <button class="icon-btn" onclick="openSettings()" title="Settings"><span
                         class="material-symbols-outlined">
                         settings
                     </span></button>
@@ -35,7 +42,6 @@
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
-        <div class="progress-text" id="progress-text">0/0 Completed</div>
     </header>
 
     <div class="board">
@@ -43,6 +49,12 @@
         <div class="column" id="col-todo" data-status="todo">
             <div class="column-header">Today's Goals</div>
             <div class="task-list" id="todo-list"></div>
+
+            <div class="add-task-wrapper">
+                <input type="text" id="adhoc-input" class="add-task-input" placeholder="Add a new mission..."
+                    onkeypress="handleEnter(event)">
+                <button class="add-btn" onclick="addAdhocTask()">+</button>
+            </div>
         </div>
 
         <!-- Done Column -->
@@ -55,12 +67,37 @@
     <!-- Settings Modal -->
     <div class="modal-overlay" id="settings-modal">
         <div class="modal">
-            <h2 style="font-weight: 700; color: var(--text-main);">Manage Habits</h2>
-            <p style="color: var(--text-muted); margin-top: 5px;">These quests will regenerate every morning.</p>
-            <textarea id="defaults-input" placeholder="Meditate&#10;Read&#10;Walk"></textarea>
-            <div style="text-align: right;">
-                <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveDefaults()">Save Changes</button>
+            <h2>Manage Habits</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">Changes will apply immediately to today's
+                board.</p>
+            <textarea id="defaults-input"></textarea>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="closeModal('settings-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save & Sync</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div class="modal-overlay" id="history-modal">
+        <div class="modal">
+            <h2>Mission History</h2>
+            <div id="history-content"></div>
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeModal('history-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trash Modal (Recycle Bin) -->
+    <div class="modal-overlay" id="trash-modal">
+        <div class="modal">
+            <h2>Recycle Bin (Today)</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">Tasks deleted today. Click Restore to put
+                them back.</p>
+            <div id="trash-content"></div>
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeModal('trash-modal')">Close</button>
             </div>
         </div>
     </div>
